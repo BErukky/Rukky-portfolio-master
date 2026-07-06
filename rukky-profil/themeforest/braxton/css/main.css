@@ -3066,6 +3066,11 @@ form textarea:required:valid {
        border-radius: var(--_radius-l);
   margin-bottom: 0.8rem;
 }
+.avatar__image img {
+  width: 100%;
+  max-height: 35vh;
+  object-fit: cover;
+}
 
 .avatar__socials {
   margin-bottom: 1rem;
