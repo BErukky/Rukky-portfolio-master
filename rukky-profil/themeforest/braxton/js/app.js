@@ -46,7 +46,10 @@ $(function() {
   const content = document.querySelector('body');
   const imgLoad = imagesLoaded(content);
 
-  imgLoad.on('done', instance => {
+  let loaderHidden = false;
+  const hideLoader = () => {
+    if (loaderHidden) return;
+    loaderHidden = true;
 
     document.getElementById("loaderContent").classList.add("fade-out");
     setTimeout(() => {
@@ -69,8 +72,16 @@ $(function() {
       onEnterBack: batch => gsap.to(batch, {opacity: 1, y: 0, stagger: 0.15, overwrite: true}),
       onLeaveBack: batch => gsap.set(batch, {opacity: 0, y: 50, overwrite: true})
     });
+  };
 
+  imgLoad.on('always', instance => {
+    hideLoader();
   });
+
+  // Fallback timeout to avoid loader hanging infinitely
+  setTimeout(() => {
+    hideLoader();
+  }, 1500);
   // --------------------------------------------- //
   // Loader & Loading Animation End
   // --------------------------------------------- //
